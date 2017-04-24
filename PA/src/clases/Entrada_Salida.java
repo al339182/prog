@@ -9,7 +9,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.PatternSyntaxException;
 
-import tarifas.ConOferta;
+import fabricas.FabricaClientes;
+import fabricas.FabricaTarifasConcr;
+import tarifas.Tarifa;
+import tarifas.TarifaBasica;
 
 public class Entrada_Salida {
 	private Scanner sc;
@@ -148,30 +151,12 @@ public class Entrada_Salida {
 		}
 		return retHora;
 	}
-	public ConOferta pedirTarifa() {
-		boolean correcto=false;
-		ConOferta retTarifa=null;
-		while(!correcto){
-			try{
-				int tarifa;
-				this.imprimir("Introduzca la tarifa");
-				String aux=sc.nextLine();
-				tarifa=Integer.parseInt(aux);
-				retTarifa=new ConOferta(tarifa);
-				correcto=true;
-			}catch(InputMismatchException e){
-				imprimir("Los datos introducidos no son los que se esperaban");
-			}catch(NumberFormatException e){
-				imprimir("Tiene que ser un número entero");
-			}
-		}
-		return retTarifa;
-	}
+
 	public  Cliente pedirCliente(){
 		String name,nif,eMail,particular,apellidos = null;
 		LocalDate fechaAlta;
 		Direccion direccionCliente;
-		ConOferta tarifaCl;
+		Tarifa tarifaCl;
 		imprimir("¿Nombre del cliente?");
 		name=sc.nextLine();
 		imprimir("¿Es particular?(y/n)");
@@ -188,13 +173,13 @@ public class Entrada_Salida {
 		fechaAlta=pedirFecha();
 		imprimir("Introduce ahora la dirección del cliente");
 		direccionCliente=pedirDireccion();
-		imprimir("Introduce ahora la tarifa del cliente");
-		tarifaCl=pedirTarifa();
-		
+		imprimir("La tarifa del cliente inicial será la básica");
+		tarifaCl=new TarifaBasica();
+		FabricaClientes fab=new FabricaClientes();
 		if(apellidos==null)
-			return new Empresa(name,nif,eMail,fechaAlta,direccionCliente,tarifaCl);
+			return fab.getEmpresa(name, nif, eMail, fechaAlta, direccionCliente, tarifaCl);
 		else
-			return new Particular(name,nif,eMail, fechaAlta,direccionCliente,tarifaCl,apellidos);
+			return fab.getParticular(name, nif, eMail, fechaAlta, direccionCliente, tarifaCl, apellidos);
 		
 	}
 	public int pedirId(){

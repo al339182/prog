@@ -20,7 +20,8 @@ import clases.Particular;
 import clases.Periodo;
 import es.uji.www.GeneradorDatosINE;
 import excepciones.PeriodoNoValidoExeption;
-import tarifas.ConOferta;
+import tarifas.Tarifa;
+import tarifas.TarifaBasica;
 import clases.Llamada;
 
 public class TestBueno  {
@@ -31,7 +32,7 @@ public class TestBueno  {
 	static Direccion direccion;
 	static Cliente cliente;
 	static LocalDate fechaAlta=LocalDate.of(2000,5,15);
-	static ConOferta tarifa;
+	static Tarifa tarifa;
 	static Llamada llamada;
 	static HashMap<Integer,Factura> facturasClientes;
 	static Factura factura;
@@ -47,7 +48,7 @@ public class TestBueno  {
 		email="emailPrueba@uji.es";
 		String provincia=generador.getProvincia();
 		direccion=new Direccion(46018,provincia,generador.getPoblacion(provincia));
-		tarifa=new ConOferta(10);
+		tarifa=new TarifaBasica();
 		fechaAlta=LocalDate.of(2000,5,5);
 		cliente = new Particular(name,NIF,email,fechaAlta,direccion,tarifa,surname);
 		llamada=new Llamada("644442380",LocalDate.of(2001,1,1),LocalTime.of(0,1,1),10);
@@ -161,15 +162,7 @@ public class TestBueno  {
 		assertEquals(null,companyia.getCliente(NIF));
 		assertEquals(false,companyia.contains(NIF));
 	}
-	@Test
-	public void testSetTarifa(){
-		ConOferta nuevaTarifa=new ConOferta(20);
-		companyia.getCliente(NIF).setTarifa(nuevaTarifa);
-		assertEquals(companyia.getCliente(NIF).getTarifa(),nuevaTarifa);
-		nuevaTarifa=new ConOferta(10);
-		companyia.getCliente(NIF).setTarifa(tarifa);
-		assertNotEquals(companyia.getCliente(NIF).getTarifa(),nuevaTarifa);
-	}
+
 	public void testBorrarLlamada(){
 		companyia.borrarLlamada(NIF, factura.getId());
 		assertTrue(companyia.listaLlamadasCliente(NIF).size()==1);

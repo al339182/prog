@@ -7,8 +7,10 @@ import enumeraciones.OpcionesCliente;
 import enumeraciones.OpcionesFacturas;
 import enumeraciones.OpcionesLlamadas;
 import enumeraciones.OpcionesMenu;
+import enumeraciones.TipoOferta;
 import excepciones.PeriodoNoValidoExeption;
-import tarifas.ConOferta;
+import fabricas.FabricaTarifasConcr;
+import tarifas.Tarifa;
 
 public class Main {
 	private static Entrada_Salida entradaSalida=new Entrada_Salida(System.in,System.out);
@@ -61,7 +63,7 @@ public class Main {
 				ejecutarBorrarCliente(companyia);
 				break;
 			case CAMBIAR_TARIFA:
-				ejecutarCambiarTarifa(companyia);
+				ejecutarAñadirOfertaTarifa(companyia);
 				break;
 			case RECUPERAR_DATOS_CLIENTE:
 				ejecutarRecuperarDatosCliente(companyia);
@@ -158,14 +160,20 @@ public class Main {
 			entradaSalida.clienteNoEsta(dni);
 		}
 	}
-	private static void ejecutarCambiarTarifa(CompanyiaTelefonica companyia){
+	private static void ejecutarAñadirOfertaTarifa(CompanyiaTelefonica companyia){
 		String dni=entradaSalida.pedirDni();
+		entradaSalida.mostrarMenu(TipoOferta.getMenu());
+		int opcion=entradaSalida.pedirOpcion();
+		while(opcion<0||opcion>TipoOferta.getNumeroOpciones()){
+			entradaSalida.imprimir("La opción seleccionada no existe");
+			opcion=entradaSalida.pedirOpcion();
+		}
 		if(companyia.contains(dni)){
-			ConOferta tarifaNueva=entradaSalida.pedirTarifa();
-			companyia.cambiarTarifa(dni, tarifaNueva);
-			entradaSalida.imprimir("Se ha cambiado correctamente");
+			FabricaTarifasConcr fab=new FabricaTarifasConcr();
+			companyia.getCliente(dni).setTarifa(fab.getTarifa(companyia.getCliente(dni),TipoOferta.getOpcion(opcion)));
+			entradaSalida.imprimir("Se ha modificado la tarifa");
 		}else{
-			entradaSalida.clienteNoEsta(dni);
+			entradaSalida.clienteNoEsta(dni);;
 		}
 	}
 	private static void ejecutarRecuperarDatosCliente(CompanyiaTelefonica companyia){

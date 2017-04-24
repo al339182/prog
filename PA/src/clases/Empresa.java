@@ -2,12 +2,12 @@ package clases;
 
 import java.time.LocalDate;
 
-import tarifas.ConOferta;
+import tarifas.Tarifa;
 
 public class Empresa extends Cliente {
 
 	private static final long serialVersionUID = -5710690198633557404L;
-	public Empresa(String name, String nif, String eMail, LocalDate fechaAlta, Direccion dir, ConOferta tar) {
+	public Empresa(String name, String nif, String eMail, LocalDate fechaAlta, Direccion dir, Tarifa tar) {
 		super(name, nif, eMail, fechaAlta, dir, tar);
 		}
 	@Override

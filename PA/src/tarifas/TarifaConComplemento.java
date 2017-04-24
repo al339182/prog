@@ -3,6 +3,10 @@ package tarifas;
 import clases.Llamada;
 
 public class TarifaConComplemento extends Tarifa {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5782752842656709845L;
 	private Tarifa tarifa;
 	
 	public TarifaConComplemento(Tarifa tarifa,float precio){
@@ -12,8 +16,11 @@ public class TarifaConComplemento extends Tarifa {
 
 	@Override
 	public float calcularCoste(Llamada llamada) {
-		
-		return Math.min(tarifa.calcularCoste(llamada),);
+		return tarifa.calcularCoste(llamada);
+	}
+	@Override
+	public String toString(){
+		return tarifa.toString();
 	}
 	
 }

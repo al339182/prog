@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import interfaces.Temporales;
-import tarifas.ConOferta;
+import tarifas.Tarifa;
 
 public abstract class Cliente implements Serializable,Temporales {
 	private static final long serialVersionUID = -980571864724160741L;
@@ -16,10 +16,10 @@ public abstract class Cliente implements Serializable,Temporales {
 	private LocalDate fechaAlta;
 	private Direccion direccion;
 	private ArrayList<Llamada> llamadasCliente;
-	private ConOferta tarifaCl; //tarifa que se le aplic al cliente , se modificarÃ  en siguientes practicas
+	private Tarifa tarifaCl; //tarifa que se le aplic al cliente , se modificarÃ  en siguientes practicas
 	private HashMap<Integer,Factura> facturas; // para organizar las facturas por codigo usamos un map
 	
-	public Cliente (String name,String nif,String eMail,LocalDate fechaAlta,Direccion dir,ConOferta tar){
+	public Cliente (String name,String nif,String eMail,LocalDate fechaAlta,Direccion dir,Tarifa tar){
 		this.name=name;
 		NIF=nif;
 		this.eMail=eMail;
@@ -38,7 +38,7 @@ public abstract class Cliente implements Serializable,Temporales {
 	public String getNif() {
 		return this.NIF;
 	}
-	public ConOferta getTarifa() {
+	public Tarifa getTarifa() {
 		return tarifaCl;
 	}
 	public ArrayList<Llamada> getllamadasEntre(LocalDate fechaInicio, LocalDate fechaFin) {
@@ -59,7 +59,7 @@ public abstract class Cliente implements Serializable,Temporales {
 	public void addLlamada(Llamada llamada) {
 		llamadasCliente.add(llamada);	
 	}
-	public void setTarifa(ConOferta tarifa) {
+	public void setTarifa(Tarifa tarifa) {
 		this.tarifaCl=tarifa;
 	}
 	public ArrayList<Llamada> getListaLlamadas() {

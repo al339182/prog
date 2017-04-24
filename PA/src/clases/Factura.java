@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import interfaces.Temporales;
-import tarifas.ConOferta;
+import tarifas.Tarifa;
 
 public class Factura implements Temporales,Serializable {
 	
@@ -13,14 +13,14 @@ public class Factura implements Temporales,Serializable {
 	
 	private String nif;
 	private int codigoId;
-	private ConOferta tarifa;
+	private Tarifa tarifa;
 	private LocalDate fechaEmision;
 	private Periodo periodo;
 	private int duracion; //en segundos, para posteriormente aplicar la factura.
 	private ArrayList<Llamada> listaLlamadasFactura;
 	private float importe;
 	
-	public Factura(String nif,int id,ConOferta tarifa,LocalDate fechaFactura,Periodo periodo,int duracion,ArrayList<Llamada> listaLlamadas){
+	public Factura(String nif,int id,Tarifa tarifa,LocalDate fechaFactura,Periodo periodo,int duracion,ArrayList<Llamada> listaLlamadas){
 		this.nif=nif;
 		this.codigoId=id;
 		this.tarifa=tarifa;
@@ -28,7 +28,11 @@ public class Factura implements Temporales,Serializable {
 		this.periodo=periodo;
 		this.duracion=duracion;
 		this.listaLlamadasFactura=listaLlamadas;
-		this.importe=tarifa.calcularImporte(duracion);
+		float suma=0;
+		for(Llamada llamada:listaLlamadas){
+			suma+=tarifa.calcularCoste(llamada);
+		}
+		this.importe=suma;
 	}
 	public Factura(int id){
 		this.codigoId=id;

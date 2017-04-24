@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import excepciones.PeriodoNoValidoExeption;
 import interfaces.Temporales;
-import tarifas.ConOferta;
+import tarifas.Tarifa;
 
 public class CompanyiaTelefonica implements Serializable {
 	
@@ -23,7 +23,7 @@ public class CompanyiaTelefonica implements Serializable {
 	public void borrarCliente(String DNI){
 			clientes.remove(DNI);
 	}
-	public void cambiarTarifa(String NIF,ConOferta tarifaNueva){
+	public void cambiarTarifa(String NIF,Tarifa tarifaNueva){
 			getCliente(NIF).setTarifa(tarifaNueva);
 	}
 	public String datosClienteString(String nif){
